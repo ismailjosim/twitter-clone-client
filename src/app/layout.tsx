@@ -2,8 +2,6 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { TooltipProvider } from "../components/ui/tooltip"
 import ThemeProvider from "../providers/theme-provider"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "../components/ui/sidebar"
-import { AppSidebar } from "../components/shared/app-sidebar"
 import LeftSidebar from "../components/layout/left-sidebar"
 import RightSidebar from "../components/layout/right-sidebar"
 
