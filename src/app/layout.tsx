@@ -3,8 +3,10 @@ import "./globals.css";
 import localFont from "next/font/local";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import ThemeProvider from "../providers/theme-provider";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const chirp = localFont({
   src: [
@@ -59,27 +61,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${chirp.variable} font-sans bg-gray-100 text-gray-900`}>
-        <div className="container mx-auto min-h-screen grid grid-cols-12 gap-5">
+      <body className={`${chirp.variable} font-sans bg-background text-foreground`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="container mx-auto min-h-screen grid grid-cols-12 gap-5">
 
-          {/* Left Sidebar */}
-          <aside className="col-span-3">
-            {/* <Sidebar /> */}
-            sidebar goes here
-          </aside>
+            {/* Left Sidebar */}
+            <aside className="col-span-3">
+              {/* <Sidebar /> */}
+              sidebar goes here
+            </aside>
 
-          {/* Feed */}
-          <main className="col-span-6 border-x border-slate-500">
-            {children}
-          </main>
+            {/* Feed */}
+            <main className="col-span-6 border-x border-[rgb(47, 51, 54)]">
+              {children}
+            </main>
 
-          {/* Right Sidebar */}
-          <aside className="col-span-3">
-            {/* <RightSidebar /> */}
-            right sidebar goes here
-          </aside>
+            {/* Right Sidebar */}
+            <aside className="col-span-3">
+              {/* <RightSidebar /> */}
+              right sidebar goes here
+            </aside>
 
-        </div>
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
