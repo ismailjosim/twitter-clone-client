@@ -57,7 +57,7 @@ export default function LeftSidebar() {
                                 "group flex items-center justify-start gap-4 text-base font-normal",
                                 "h-auto py-3 px-3 rounded-full w-fit xl:pr-6",
                                 "text-foreground transition-colors duration-150",
-                                "hover:bg-accent hover:text-accent-foreground",
+                                "hover:bg-accent hover:text-accent-foreground cursor-pointer",
                                 isActive && "font-bold"
                             )}
                         >
