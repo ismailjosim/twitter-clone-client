@@ -3,6 +3,8 @@ import './globals.css'
 import { TooltipProvider } from '../components/ui/tooltip'
 import ThemeProvider from '../providers/theme-provider'
 import localFont from 'next/font/local'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
 const chirp = localFont({
 	src: [
 		{
@@ -45,11 +47,13 @@ export default function RootLayout({
 			<body
 				className={`${chirp.variable} font-sans bg-background text-foreground min-h-screen`}
 			>
-				<TooltipProvider>
-					<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-						{children}
-					</ThemeProvider>
-				</TooltipProvider>
+				<GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID as string}>
+					<TooltipProvider>
+						<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+							{children}
+						</ThemeProvider>
+					</TooltipProvider>
+				</GoogleOAuthProvider>
 			</body>
 		</html>
 	)
