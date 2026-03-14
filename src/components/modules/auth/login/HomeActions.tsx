@@ -2,19 +2,18 @@
 import { FaGoogle, FaApple } from 'react-icons/fa'
 import Image from 'next/image'
 import Link from 'next/link'
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
+import { useGoogleLogin } from '@react-oauth/google'
 
 export default function HomeActions({ setView }: any) {
 	const handleGoogleLogin = useGoogleLogin({
-		onSuccess: async (tokenResponse) => {
-			console.log('Google access token:', tokenResponse.access_token)
-
+		onSuccess: async (response) => {
 			try {
+				console.log({ response })
 				const res = await fetch(
 					'https://www.googleapis.com/oauth2/v3/userinfo',
 					{
 						headers: {
-							Authorization: `Bearer ${tokenResponse.access_token}`,
+							Authorization: `Bearer ${response.access_token}`,
 						},
 					},
 				)
