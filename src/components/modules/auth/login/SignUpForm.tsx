@@ -2,19 +2,19 @@
 
 'use client'
 
-import { Controller, useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Input } from "@/src/components/ui/input"
-import { Button } from "@/src/components/ui/button"
+import { Input } from '@/src/components/ui/input'
+import { Button } from '@/src/components/ui/button'
 
 import {
     Field,
     FieldLabel,
     FieldError,
-    FieldGroup
-} from "@/src/components/ui/field"
+    FieldGroup,
+} from '@/src/components/ui/field'
 
 const schema = z.object({
     name: z.string().min(2),
@@ -23,13 +23,12 @@ const schema = z.object({
 })
 
 export default function SignUpForm({ setView }: any) {
-
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            name: "",
-            email: "",
-            password: "",
+            name: '',
+            email: '',
+            password: '',
         },
     })
 
@@ -38,88 +37,68 @@ export default function SignUpForm({ setView }: any) {
     }
 
     return (
-        <div className="space-y-6">
-
-            <h2 className="text-white text-2xl font-bold text-center">
+        <div className='space-y-6'>
+            <h2 className='text-white text-2xl font-bold text-center'>
                 Create your account
             </h2>
 
-            <form
-                className="space-y-4"
-                onSubmit={form.handleSubmit(onSubmit)}
-            >
-
+            <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
-
                     <Controller
-                        name="name"
+                        name='name'
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
-
                                 <FieldLabel>Name</FieldLabel>
 
-                                <Input {...field} placeholder="Name" />
+                                <Input {...field} placeholder='Name' />
 
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}
-
                             </Field>
                         )}
                     />
 
                     <Controller
-                        name="email"
+                        name='email'
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
-
                                 <FieldLabel>Email</FieldLabel>
 
-                                <Input {...field} placeholder="Email" />
+                                <Input {...field} placeholder='Email' />
 
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}
-
                             </Field>
                         )}
                     />
 
                     <Controller
-                        name="password"
+                        name='password'
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
-
                                 <FieldLabel>Password</FieldLabel>
 
-                                <Input {...field} type="password" placeholder="Password" />
+                                <Input {...field} type='password' placeholder='Password' />
 
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}
-
                             </Field>
                         )}
                     />
-
                 </FieldGroup>
 
-                <Button className="w-full rounded-full">
-                    Create account
-                </Button>
-
+                <Button className='w-full rounded-full'>Create account</Button>
             </form>
 
-            <button
-                onClick={() => setView("home")}
-                className="text-zinc-400 text-sm"
-            >
+            <button onClick={() => setView('home')} className='text-zinc-400 text-sm'>
                 ← Back
             </button>
-
         </div>
     )
 }

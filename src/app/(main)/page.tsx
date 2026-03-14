@@ -1,13 +1,11 @@
-import Feed from "../../components/layout/feed";
-
-
+import Feed from '../../components/layout/feed'
 
 const HomePage = () => {
-    return (
-        <div>
-            <Feed />
-        </div>
-    );
-};
+	return (
+		<div>
+			<Feed />
+		</div>
+	)
+}
 
-export default HomePage;
+export default HomePage

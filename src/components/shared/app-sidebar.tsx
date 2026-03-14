@@ -1,26 +1,18 @@
 import {
-    Sidebar,
-    SidebarContent,
-    SidebarFooter,
-    SidebarHeader,
-} from "../ui/sidebar"
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarHeader,
+} from '../ui/sidebar'
 
 export function AppSidebar() {
-    return (
-        <Sidebar>
+	return (
+		<Sidebar>
+			<SidebarHeader>X</SidebarHeader>
 
-            <SidebarHeader>
-                X
-            </SidebarHeader>
+			<SidebarContent>Navigation items</SidebarContent>
 
-            <SidebarContent>
-                Navigation items
-            </SidebarContent>
-
-            <SidebarFooter>
-                Profile section
-            </SidebarFooter>
-
-        </Sidebar>
-    )
+			<SidebarFooter>Profile section</SidebarFooter>
+		</Sidebar>
+	)
 }
