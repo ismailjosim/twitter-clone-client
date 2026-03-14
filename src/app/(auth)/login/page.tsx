@@ -10,8 +10,7 @@ const LoginPage = () => {
                 <FaXTwitter size={500} />
             </div>
             <div>
-
-                {/* <LoginFrom /> */}
+                <LoginFrom />
             </div>
 
         </div>
