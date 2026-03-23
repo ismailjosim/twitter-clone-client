@@ -3,33 +3,56 @@ import { FaGoogle, FaApple } from 'react-icons/fa'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useGoogleLogin } from '@react-oauth/google'
+import { toast } from 'sonner'
+import { graphqlClient } from '../../../../clients/api'
+import { verifyUserGoogleTokenQuery } from '../../../../graphql/query/user'
 
 export default function HomeActions({ setView }: any) {
 	const handleGoogleLogin = useGoogleLogin({
 		onSuccess: async (response) => {
 			try {
-				console.log({ response })
-				const res = await fetch(
-					'https://www.googleapis.com/oauth2/v3/userinfo',
-					{
-						headers: {
-							Authorization: `Bearer ${response.access_token}`,
-						},
-					},
-				)
+				// console.log({ response })
 
-				const userInfo = await res.json()
-
-				console.log('Google user:', userInfo)
+				if (!response.access_token) {
+					return toast.error('Google Token not found!')
+				}
 
 				// send to backend if needed
+				const { verifyGoogleToken } = await graphqlClient.request(
+					verifyUserGoogleTokenQuery,
+					{
+						token: response.access_token,
+					},
+				)
+				console.log(verifyGoogleToken)
+
+				// const res = await fetch(
+				// 	'https://www.googleapis.com/oauth2/v3/userinfo',
+				// 	{
+				// 		headers: {
+				// 			Authorization: `Bearer ${response.access_token}`,
+				// 		},
+				// 	},
+				// )
+
+				// if (!res.ok) {
+				// 	return toast.error('Failed to fetch user info from Google.')
+				// }
+
+				// const userInfo = await res.json()
+				// console.log('Google user:', userInfo)
+
+				// toast.success(`Welcome, ${userInfo.name ?? userInfo.email}!`)
+
 				// await fetch("/api/auth/google", { ... })
 			} catch (error) {
 				console.error(error)
+				toast.error('Something went wrong during Google login.')
 			}
 		},
 		onError: () => {
 			console.log('Google Login Failed')
+			toast.error('Google login failed. Please try again.')
 		},
 	})
 	return (

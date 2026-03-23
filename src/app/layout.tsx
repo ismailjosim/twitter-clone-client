@@ -4,6 +4,7 @@ import { TooltipProvider } from '../components/ui/tooltip'
 import ThemeProvider from '../providers/theme-provider'
 import localFont from 'next/font/local'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { Toaster } from '../components/ui/sonner'
 
 const chirp = localFont({
 	src: [
@@ -54,6 +55,7 @@ export default function RootLayout({
 						</ThemeProvider>
 					</TooltipProvider>
 				</GoogleOAuthProvider>
+				<Toaster position='top-center' />
 			</body>
 		</html>
 	)
