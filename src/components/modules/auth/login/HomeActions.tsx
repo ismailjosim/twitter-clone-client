@@ -24,27 +24,22 @@ export default function HomeActions({ setView }: any) {
 						token: response.access_token,
 					},
 				)
-				console.log(verifyGoogleToken)
+				if (!verifyGoogleToken) {
+					return toast.error('Google login failed. Please try again.')
+				}
+				const { accessToken, refreshToken, user } = verifyGoogleToken
+				// Send tokens to Next.js route handler to set httpOnly cookies
+				const res = await fetch('/api/auth/set-tokens', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ accessToken, refreshToken }),
+				})
 
-				// const res = await fetch(
-				// 	'https://www.googleapis.com/oauth2/v3/userinfo',
-				// 	{
-				// 		headers: {
-				// 			Authorization: `Bearer ${response.access_token}`,
-				// 		},
-				// 	},
-				// )
+				if (!res.ok) {
+					return toast.error('Failed to save session.')
+				}
 
-				// if (!res.ok) {
-				// 	return toast.error('Failed to fetch user info from Google.')
-				// }
-
-				// const userInfo = await res.json()
-				// console.log('Google user:', userInfo)
-
-				// toast.success(`Welcome, ${userInfo.name ?? userInfo.email}!`)
-
-				// await fetch("/api/auth/google", { ... })
+				toast.success(`Welcome, ${user.name ?? user.email}!`)
 			} catch (error) {
 				console.error(error)
 				toast.error('Something went wrong during Google login.')
