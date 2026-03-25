@@ -14,6 +14,7 @@ import {
 	FieldError,
 	FieldGroup,
 } from '@/src/components/ui/field'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const schema = z.object({
 	email: z.string().min(1, 'Email required'),
@@ -21,6 +22,8 @@ const schema = z.object({
 })
 
 export default function SignInForm({ setView }: any) {
+	const router = useRouter()
+	const searchParams = useSearchParams()
 	const form = useForm({
 		resolver: zodResolver(schema),
 		defaultValues: {

@@ -15,9 +15,11 @@ export function proxy(request: NextRequest) {
 	const isAuthRoute = AUTH_ROUTES.some((route) => pathname === route)
 
 	// Not logged in → trying to access protected page → redirect to /login
-	if (!isLoggedIn && isProtectedRoute) {
+	if (!isLoggedIn && isProtectedRoute && !isAuthRoute) {
 		const loginUrl = new URL('/login', request.url)
-		loginUrl.searchParams.set('next', pathname)
+		if (pathname !== '/') {
+			loginUrl.searchParams.set('next', pathname)
+		}
 		return NextResponse.redirect(loginUrl)
 	}
 

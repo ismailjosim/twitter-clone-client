@@ -5,9 +5,13 @@ import Link from 'next/link'
 import { useGoogleLogin } from '@react-oauth/google'
 import { toast } from 'sonner'
 import { graphqlClient } from '../../../../clients/api'
-import { verifyUserGoogleTokenQuery } from '../../../../graphql/query/user'
+import { type TypedDocumentNode } from '@graphql-typed-document-node/core'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { verifyUserGoogleTokenMutation } from '../../../../graphql/query/user'
 
 export default function HomeActions({ setView }: any) {
+	const router = useRouter()
+	const searchParams = useSearchParams()
 	const handleGoogleLogin = useGoogleLogin({
 		onSuccess: async (response) => {
 			try {
@@ -19,10 +23,11 @@ export default function HomeActions({ setView }: any) {
 
 				// send to backend if needed
 				const { verifyGoogleToken } = await graphqlClient.request(
-					verifyUserGoogleTokenQuery,
-					{
-						token: response.access_token,
-					},
+					verifyUserGoogleTokenMutation as TypedDocumentNode<
+						any,
+						{ token: string }
+					>,
+					{ token: response.access_token },
 				)
 				if (!verifyGoogleToken) {
 					return toast.error('Google login failed. Please try again.')
@@ -40,6 +45,8 @@ export default function HomeActions({ setView }: any) {
 				}
 
 				toast.success(`Welcome, ${user.name ?? user.email}!`)
+				const next = searchParams.get('next') || '/'
+				router.push(next)
 			} catch (error) {
 				console.error(error)
 				toast.error('Something went wrong during Google login.')
