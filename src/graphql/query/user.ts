@@ -16,3 +16,18 @@ export const verifyUserGoogleTokenMutation = graphql(`
 		}
 	}
 `)
+
+export const getCurrentUserQuery = graphql(`
+	#graphql
+	query getCurrentUser(){
+  		getCurrentUser {
+    id
+    email
+    name
+    phone
+    profileImage
+
+}
+
+	}
+	`)

@@ -5,6 +5,7 @@ import ThemeProvider from '../providers/theme-provider'
 import localFont from 'next/font/local'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { Toaster } from '../components/ui/sonner'
+import ReactQueryProvider from '../providers/TanstackQueryProvider'
 
 const chirp = localFont({
 	src: [
@@ -51,7 +52,7 @@ export default function RootLayout({
 				<GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID as string}>
 					<TooltipProvider>
 						<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-							{children}
+							<ReactQueryProvider>{children}</ReactQueryProvider>
 						</ThemeProvider>
 					</TooltipProvider>
 				</GoogleOAuthProvider>
